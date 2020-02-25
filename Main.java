@@ -7,7 +7,7 @@ public class Main {
       try {
          Class.forName("org.postgresql.Driver");
          c = DriverManager
-            .getConnection("jdbc:postgresql://localhost:5432/case",
+            .getConnection("jdbc:postgresql://192.168.99.100:5432/case",
             "CMSC495", "SuperSecret");
       } catch (Exception e) {
          e.printStackTrace();
