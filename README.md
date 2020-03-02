@@ -12,8 +12,22 @@ Install the JDBC driver jar from postgres (https://jdbc.postgresql.org/download.
 
 ## Running the project
 
-This command will start up the postgres database container and host it on port 5432. Ensure you run this command from the Docker Quickstart Terminal
+Before you run the program, start the Docker quickstart terminal and take note of the IP address the terminal is running on. 
+The default address is 192.168.99.100, if you are running this on a windows system then this default address is already set in the application.
+
+Once you have recorded this IP address, run the following command to set the proper IP of the database:
+```
+export DATABASE_HOST="<docker IP>"
+```
+
+Next, start the database by running the docker-compose command. This command will start up the postgres database container and host it on port 5432. Ensure you run this command from the Docker Quickstart Terminal
 
 ```
  docker-compose up -d
 ```
+
+Finally, run the java application
+```
+java -cp ./Libraries/* Main.java
+```
+
