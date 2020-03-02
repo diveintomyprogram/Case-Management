@@ -1,5 +1,10 @@
+language: java
 services:
   - docker
 
 script:
-   - docker-compose up -d
+   - | 
+     docker-compose up -d
+     DATABASE_HOST="0.0.0.0" \
+     java -cp ./Libraries/* Main.java
+     
