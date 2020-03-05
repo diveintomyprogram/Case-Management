@@ -28,6 +28,6 @@ Next, start the database by running the docker-compose command. This command wil
 
 Finally, run the java application
 ```
-java -cp ./Libraries/* Main.java
+java -jar target/UMUC495-Case-Management-1.0.jar
 ```
 
