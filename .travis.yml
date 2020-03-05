@@ -1,6 +1,10 @@
 language: java
+
 services:
   - docker
+
+before_install:
+   - chmod +x ./mvnw
 
 before_script:
    - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=True -B -V
