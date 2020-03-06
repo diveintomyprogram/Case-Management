@@ -1,10 +1,16 @@
 language: java
+
 services:
   - docker
 
+before_install:
+   - chmod +x ./mvnw
+
+before_script:
+   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=True -B -V
+
 script:
-   - | 
-     docker-compose up -d
-     DATABASE_HOST="0.0.0.0" \
-     java -cp ./Libraries/* Main.java
+   - ./mvnw clean validate package
+   - docker-compose up -d
+   - DATABASE_HOST="0.0.0.0" java -jar target/UMUC495-Case-Management-1.0.jar
      
