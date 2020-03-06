@@ -1,46 +1,59 @@
 package src.main.java;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.*; 
 import java.awt.*; 
 import javax.swing.*;
 
-public class Display extends JFrame implements ActionListener, FocusListener {
-	 /**
-	 * Display class is the main container window of the UI. 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	//JTextField
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author olivia
+ */
+class AuthenticationGUI extends JFrame implements ActionListener, FocusListener {
+    //JTextField
     static JTextField Username;
-       //JPAsswordfield
+    
+    //JPAsswordfield
     static JPasswordField pass;
+    
     //JFrame
     static JFrame f;
-    //create buttons
-    static JButton SignInBtn;
-       //label to display text
-    static JLabel l;
-    static src.main.java.Database db;
-    
-    Display() {
-    	//Stub Constructor
-    }
- // flag to set the text to blank for the first time when the component gets focus 
-    boolean flag = true; 
 
-	public static void main(String[] args) {
-		//create a new frame to store text field and button
+   //create buttons
+   static JButton SignInBtn;
+   
+   //label to display text
+   static JLabel l;
+   
+   //default constructor
+   AuthenticationGUI () 
+   {
+   }
+   
+   //main class
+    public static void main(String[] args) {
+        //create a new frame to store text field and button
         f = new JFrame("Authentication");
+        
         //create a label to display text
         l = new JLabel("nothing entered");
+        
         //create a new button
         SignInBtn = new JButton("submit");
-		
-        Display display = new Display();
         
-        SignInBtn.addActionListener(display);
-               
+        // create a object of the AuthenticationGUI class
+        AuthenticationGUI au = new AuthenticationGUI();
+        
+        //addActionLister to button
+        SignInBtn.addActionListener(au);
+        
         //create a object of JTextField with 16 columns and inital text
         Username = new JTextField("enter username", 16);
         
@@ -48,7 +61,7 @@ public class Display extends JFrame implements ActionListener, FocusListener {
         pass = new JPasswordField(16);
         
         //add FocusListener to passwordField
-        pass.addFocusListener((FocusListener) display);
+        pass.addFocusListener((FocusListener) au);
         
         // set the echo character of the password field
         pass.setEchoChar((char)0);
@@ -76,17 +89,15 @@ public class Display extends JFrame implements ActionListener, FocusListener {
   
         // set the size of frame 
         f.setSize(300, 300); 
-        
-		String dbHost = System.getenv("DATABASE_HOST");
-		if (dbHost == null) {
-			// Set default value
-			dbHost = "192.168.99.100";
-		}
-		db = new src.main.java.Database(dbHost, "case", "CMSC495", "SuperSecret");
-		//db.seed();
-		f.setVisible(true);
-	}
-	public void focusGained(FocusEvent e) 
+  
+        f.show(); 
+    } 
+    // flag to set the text to blank for the first time when the component gets focus 
+    boolean flag = true; 
+  
+    // events of focus listener 
+    // when focus is gained 
+    public void focusGained(FocusEvent e) 
     { 
         if (flag) { 
             // set a definite echo char 
@@ -96,13 +107,13 @@ public class Display extends JFrame implements ActionListener, FocusListener {
             // set the text to blank 
             pass.setText(""); 
             flag = false; 
-        }
+        } 
     } 
   
     // when the focus is lost 
     public void focusLost(FocusEvent e) 
     { 
-    	flag = true;
+    	
     } 
   
     // if the button is pressed 
@@ -111,13 +122,14 @@ public class Display extends JFrame implements ActionListener, FocusListener {
         String s = e.getActionCommand(); 
         if (s.equals("submit")) { 
 
-        	if(db.adminLogin(Username.getText(), String.valueOf(pass.getPassword()))) {
-        		l.setText("Welcome to The Police Database");
-        	}
+            if(Username.getText().equals("Cop123") && String.valueOf(pass.getPassword()).equals("cmsc123")) {
+            // set the text of the label to the text of the field 
+            l.setText("Welcome to The Police Database");
+            }
             else 
                 l.setText("Incorrect Username and/or Password");
                 System.out.println("Username: " + Username.getText());
             	System.out.println("Password: " + String.valueOf(pass.getPassword()));
-        }
     }
 }
+    }
