@@ -2,7 +2,6 @@ package src.main.java;
 
 import java.awt.Font;
 import java.awt.event.*; 
-import java.awt.*; 
 import javax.swing.*;
 
 public class Display extends JFrame implements ActionListener, FocusListener {
