@@ -26,6 +26,10 @@ public Database(String host, String name, String user, String password) {
 	dbPassword=password;
 }
 
+public String createInmate(Inmate in) {
+	return "";
+}
+
 private Connection getConnection() {
 	Connection conn = null;
 	try {
