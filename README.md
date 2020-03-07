@@ -10,11 +10,20 @@ This project is a case management system to help police personnel track and mana
 Have Docker Toolbox installed on a Windows 10 machine
 Install the JDBC driver jar from postgres (https://jdbc.postgresql.org/download.html)
 
+## Building the project
+
+We are using maven for dependency management and assembling the jar file. 
+To build the project, simply checkout the repo and then run the maven wrapper script from the docker quickstart terminal
+```
+./mvnw clean validate compile package
+```
+
 ## Running the project
 
 Before you run the program, start the Docker quickstart terminal and take note of the IP address the terminal is running on. 
 The default address is 192.168.99.100, if you are running this on a windows system then this default address is already set in the application.
 
+NOTE: Only do this step on linux or mac systems
 Once you have recorded this IP address, run the following command to set the proper IP of the database:
 ```
 export DATABASE_HOST="<docker IP>"

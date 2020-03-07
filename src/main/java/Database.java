@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class Database {
 
@@ -41,15 +42,51 @@ private Connection getConnection() {
 	return conn;
 }
 
-public void seed() {
-	String[] seedCasesSQL = { 
-    		"CREATE TABLE cases(suspect_id int primary key, uuid int, case_status varchar, case_photos text, offense_id int);",
-    		"CREATE TABLE inmates(suspect_id int primary key, uuid int, case_status varchar, case_photos text, offense_id int);"    		
-    };
-	runQueries(seedCasesSQL);
+public Boolean adminLogin(String username, String password) {
+	String check_auth = "SELECT EXISTS (SELECT id FROM admins WHERE user_name='" + username + "' AND password='" + password + "');";
+	Connection conn = getConnection();
+	ResultSet rs;
+	boolean isAuth = false;
+	
+	try {
+		Statement statement = conn.createStatement();
+		rs = statement.executeQuery(check_auth);
+		// Go to the first result in the set
+		rs.next(); 
+		isAuth = rs.getBoolean(1);
+	} catch(Exception e) {
+		System.out.println("Database Query failed");
+	    System.out.print(e.getMessage());
+	  
+	} finally {
+		try {
+			conn.close();
+		} catch(SQLException e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		System.out.println("DB Connection Closed");
+	}
+	return isAuth;
 }
 
-public void runQueries(String[] strings) {
+public void seed() {
+	String[] createTablesSQL = { 
+    		"CREATE TABLE cases(suspect_id int, uuid int primary key, case_address text, case_status varchar(10), offense_type text);",
+       		"CREATE TABLE inmates(ssn int primary key, first_name varchar, last_name varchar, height int, weight int, eye_color text, hair_color text, tattoos int, mugshot text);",
+    		"CREATE TABLE admins(id int primary key, user_name varchar(30), password varchar(64));"
+    };
+	_runSeeds(createTablesSQL);
+	String[] seedTablesSQL = {
+			"INSERT INTO admins VALUES(1, 'COP123', 'cmsc495');",
+			"INSERT INTO cases VALUES(218445657, 12, '1428 Elm Street', 'closed', 'assault and battery');",
+			"INSERT INTO cases VALUES(212325613, 11, '370 Beech Street Highland Park, IL 60035', 'closed', 'Destruction of Property');",
+			"INSERT INTO inmates VALUES(218445657, 'john', 'doe', 72, 240, 'brown', 'black', 4, 'src/main/resources/8475.jpg');",
+			"INSERT INTO inmates VALUES(212325613, 'john', 'philips', 62, 200, 'grey', 'blue', 0, 'src/main/resources/8375.jpg');"
+	};
+	_runSeeds(seedTablesSQL);
+}
+
+private void _runSeeds(String[] strings) {
 	Connection conn = getConnection();
     try {
     	for (String line : strings) { 	   	
