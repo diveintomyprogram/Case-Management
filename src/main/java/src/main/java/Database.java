@@ -40,7 +40,7 @@ public ArrayList<Inmate> searchInmates(int i) {
 		rs = statement.executeQuery(s);
 		
 		while (rs.next()) {
-			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("height"), rs.getInt("weight"),
+			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("dob"), rs.getInt("height"), rs.getInt("weight"),
 					rs.getString("eye_color"), rs.getString("hair_color"), rs.getInt("tattoos"), rs.getString("mugshot"));
 			inmates.add(in);
 		}
@@ -70,7 +70,7 @@ public ArrayList<Inmate> searchInmates(String name) {
 		rs = statement.executeQuery(s);
 		
 		while (rs.next()) {
-			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("height"), rs.getInt("weight"),
+			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("dob"), rs.getInt("height"), rs.getInt("weight"),
 					rs.getString("eye_color"), rs.getString("hair_color"), rs.getInt("tattoos"), rs.getString("mugshot"));
 			inmates.add(in);
 		}
@@ -157,7 +157,7 @@ public Boolean adminLogin(String username, String password) {
 public void seed() {
 	String[] createTablesSQL = { 
     		"CREATE TABLE cases(suspect_id int, uuid int primary key, case_address text, case_status varchar(10), offense_type text);",
-       		"CREATE TABLE inmates(ssn int primary key, first_name varchar, last_name varchar, height int, weight int, eye_color text, hair_color text, tattoos int, mugshot text);",
+       		"CREATE TABLE inmates(ssn int primary key, first_name varchar, last_name varchar, dob varchar, height int, weight int, eye_color text, hair_color text, tattoos int, mugshot text);",
     		"CREATE TABLE admins(id int primary key, user_name varchar(30), password varchar(64));"
     };
 	_runSeeds(createTablesSQL);
@@ -165,8 +165,8 @@ public void seed() {
 			"INSERT INTO admins VALUES(1, 'COP123', 'cmsc495');",
 			"INSERT INTO cases VALUES(218445657, 12, '1428 Elm Street', 'closed', 'assault and battery');",
 			"INSERT INTO cases VALUES(212325613, 11, '370 Beech Street Highland Park, IL 60035', 'closed', 'Destruction of Property');",
-			"INSERT INTO inmates VALUES(218445657, 'john', 'doe', 72, 240, 'brown', 'black', 4, 'src/main/resources/8475.jpg');",
-			"INSERT INTO inmates VALUES(212325613, 'john', 'philips', 62, 200, 'grey', 'blue', 0, 'src/main/resources/8375.jpg');"
+			"INSERT INTO inmates VALUES(218445657, 'john', 'doe', '01/01/1982', 72, 240, 'brown', 'black', 4, 'src/main/resources/8475.jpg');",
+			"INSERT INTO inmates VALUES(212325613, 'john', 'philips', '09/12/2001', 62, 200, 'grey', 'blue', 0, 'src/main/resources/8375.jpg');"
 	};
 	_runSeeds(seedTablesSQL);
 }

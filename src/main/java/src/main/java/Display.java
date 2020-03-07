@@ -85,7 +85,7 @@ public class Display extends JFrame implements ActionListener, FocusListener {
 		}
 		db = new src.main.java.Database(dbHost, "case", "CMSC495", "SuperSecret");
 		db.seed();
-		Inmate new_inmate = new Inmate(456, "Steve", "Rogers", 73, 235, "blue", "blonde", 0, "src/main/resources/8375.jpg");
+		Inmate new_inmate = new Inmate(456, "Steve", "Rogers", "03/21/76", 73, 235, "blue", "blonde", 0, "src/main/resources/8375.jpg");
 		System.out.println(db.createInmate(new_inmate));
 		ArrayList<Inmate> inmates = new ArrayList<Inmate>();
 		inmates.addAll(db.searchInmates("john"));
