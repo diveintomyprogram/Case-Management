@@ -83,7 +83,7 @@ public class Display extends JFrame implements ActionListener, FocusListener {
 			dbHost = "192.168.99.100";
 		}
 		db = new src.main.java.Database(dbHost, "case", "CMSC495", "SuperSecret");
-		//db.seed();
+		db.seed();
 		f.setVisible(true);
 	}
 	public void focusGained(FocusEvent e) 
