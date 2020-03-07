@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.ResultSet;
 
+/**
+*
+* @author ddanielr
+*/
 public class Database {
 
 private String dbHost, dbName, dbUser, dbPassword;
@@ -25,9 +30,85 @@ public Database(String host, String name, String user, String password) {
 	dbUser=user;
 	dbPassword=password;
 }
+public ArrayList<Inmate> searchInmates(int i) {
+	Connection conn = getConnection();
+	ResultSet rs = null;
+	ArrayList<Inmate> inmates = new ArrayList<Inmate>();
+	try {
+		Statement statement = conn.createStatement();
+		String s = "SELECT * from inmates WHERE ssn=" + i + ";"; 
+		rs = statement.executeQuery(s);
+		
+		while (rs.next()) {
+			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("height"), rs.getInt("weight"),
+					rs.getString("eye_color"), rs.getString("hair_color"), rs.getInt("tattoos"), rs.getString("mugshot"));
+			inmates.add(in);
+		}
+	} catch(Exception e) {
+		System.out.println("Inmate Search failed");
+	    System.out.print(e.getMessage());
+	  
+	} finally {
+		try {
+			conn.close();
+		} catch(SQLException e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		System.out.println("DB Connection Closed");
+	}
+	return inmates;
+}
+
+
+public ArrayList<Inmate> searchInmates(String name) {
+	Connection conn = getConnection();
+	ResultSet rs = null;
+	ArrayList<Inmate> inmates = new ArrayList<Inmate>();
+	try {
+		Statement statement = conn.createStatement();
+		String s = "SELECT * from inmates WHERE last_name='" + name + "' OR first_name='" + name +"';"; 
+		rs = statement.executeQuery(s);
+		
+		while (rs.next()) {
+			Inmate in = new Inmate(rs.getInt("ssn"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("height"), rs.getInt("weight"),
+					rs.getString("eye_color"), rs.getString("hair_color"), rs.getInt("tattoos"), rs.getString("mugshot"));
+			inmates.add(in);
+		}
+	} catch(Exception e) {
+		System.out.println("Inmate Search failed");
+	    System.out.print(e.getMessage());
+	  
+	} finally {
+		try {
+			conn.close();
+		} catch(SQLException e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		System.out.println("DB Connection Closed");
+	}
+	return inmates;
+}
 
 public String createInmate(Inmate in) {
-	return "";
+	Connection conn = getConnection();
+	try {
+		Statement statement = conn.createStatement();
+		String s = "INSERT INTO inmates VALUES(" + in.toString() + ");";
+		System.out.println(s);
+		statement.execute(s);
+	} catch(Exception e) {
+		System.out.println("Inmate Creation failed");
+	    System.out.print(e.getMessage());
+	  
+	} finally {
+		try {
+			conn.close();
+		} catch(SQLException e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		System.out.println("DB Connection Closed");
+	}
+	return "Created Inmate: " + in.ssn;
 }
 
 private Connection getConnection() {
