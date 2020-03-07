@@ -1,7 +1,9 @@
 package src.main.java;
 
 import java.awt.Font;
-import java.awt.event.*; 
+import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class Display extends JFrame implements ActionListener, FocusListener {
@@ -83,6 +85,16 @@ public class Display extends JFrame implements ActionListener, FocusListener {
 		}
 		db = new src.main.java.Database(dbHost, "case", "CMSC495", "SuperSecret");
 		db.seed();
+		Inmate new_inmate = new Inmate(456, "Steve", "Rogers", 73, 235, "blue", "blonde", 0, "src/main/resources/8375.jpg");
+		System.out.println(db.createInmate(new_inmate));
+		ArrayList<Inmate> inmates = new ArrayList<Inmate>();
+		inmates.addAll(db.searchInmates("john"));
+		inmates.addAll(db.searchInmates(456));
+		
+		for (Inmate inmate : inmates) {
+			System.out.println(inmate);
+		}
+		
 		f.setVisible(true);
 	}
 	public void focusGained(FocusEvent e) 
@@ -112,11 +124,10 @@ public class Display extends JFrame implements ActionListener, FocusListener {
 
         	if(db.adminLogin(Username.getText(), String.valueOf(pass.getPassword()))) {
         		l.setText("Welcome to The Police Database");
+        		System.out.println("Username: " + Username.getText() + " Logged in");
         	}
             else 
                 l.setText("Incorrect Username and/or Password");
-                System.out.println("Username: " + Username.getText());
-            	System.out.println("Password: " + String.valueOf(pass.getPassword()));
         }
     }
 }
