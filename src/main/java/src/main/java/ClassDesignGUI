@@ -1,0 +1,115 @@
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.*; 
+import java.awt.*; 
+import javax.swing.*;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author olivia
+ */
+class ClassDesignGUI extends JFrame implements ActionListener, FocusListener {
+    //JTextField
+    static JTextField First_Name;
+    static JTextField Last_Name;
+    static JTextField SSN;
+    static JTextField Month;
+    static JTextField Day;
+    static JTextField Year;
+    static JTextField Eye_Color;
+    static JTextField Tattoo;
+    
+    //JFrame
+    static JFrame f;
+
+   //create buttons
+   static JButton UploadBtn;
+
+   
+   //default constructor
+   ClassDesignGUI () 
+   {
+   }
+   
+   //main class
+    public static void main(String[] args) {
+        //create a new frame to store text field and button
+        f = new JFrame("Frontend");
+        
+        
+        //create a new button
+        UploadBtn = new JButton("Upload Mugshot");
+        
+        // create a object of the ClassDesign class
+        ClassDesignGUI au = new ClassDesignGUI();
+        
+        //addActionLister to button
+        UploadBtn.addActionListener((ActionListener) au);
+        
+        //create a object of JTextField with columns and inital text
+        First_Name = new JTextField("First Name", 16);
+        Last_Name = new JTextField("Last Name", 16);
+        SSN = new JTextField("Social Security Number", 9);
+        Month = new JTextField ("Month", 10);
+        Day = new JTextField("Day", 2);
+        Year = new JTextField("Year", 4);
+        Eye_Color = new JTextField ("Eye Color", 6);
+        Tattoo = new JTextField ("Number of Tattoos", 10);
+  
+        // create a panel to add buttons and textfield 
+        JPanel p = new JPanel(); 
+  
+        // add buttons and textfield to panel 
+        p.add(First_Name);
+        p.add(Last_Name);
+        p.add(SSN);
+        p.add(Month);
+        p.add(Day);
+        p.add(Year);
+        p.add(Eye_Color);
+        p.add(Tattoo); 
+        p.add(UploadBtn); 
+  
+        // add panel to frame 
+        f.add(p); 
+  
+        // set the size of frame 
+        f.setSize(300, 300); 
+  
+        f.show(); 
+    } 
+  
+    // when the focus is lost 
+    public void focusLost(FocusEvent e) 
+    { 
+    } 
+  
+    // if the button is pressed 
+    public void actionPerformed(ActionEvent e) 
+    { 
+        String s = e.getActionCommand(); 
+        if (s.equals("Upload Mugshot")) { 
+             if(UploadBtn.getText().equals("PDF")) {
+            // set the text of the label to the text of the field 
+                System.out.println("Display Mugshot " + UploadBtn.getText());
+            }
+            else
+                System.out.println("Upload PDF Only");
+
+    }
+}
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    }
+
+
