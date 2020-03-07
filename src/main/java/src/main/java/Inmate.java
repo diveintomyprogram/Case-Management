@@ -5,6 +5,7 @@ public class Inmate {
 	public int ssn;
 	public String firstName;
 	public String lastName;
+	public String dob;
 	public int height;
 	public int weight;
 	public String eyeColor;
@@ -16,6 +17,7 @@ public class Inmate {
 		ssn = 0;
 		firstName = "";
 		lastName = "";
+		dob ="";
 		height = 0;
 		weight = 0;
 		eyeColor = "";
@@ -24,10 +26,11 @@ public class Inmate {
 		mugshot = "";
 	}
 	
-	public Inmate(int ssn, String fn, String ln, int h, int w, String ec, String hc, int t, String ms) {
+	public Inmate(int ssn, String fn, String ln, String dob, int h, int w, String ec, String hc, int t, String ms) {
 		this.ssn = ssn;
 		firstName = fn;
 		lastName = ln;
+		this.dob = dob;
 		height = h;
 		weight = w;
 		eyeColor = ec;
@@ -37,7 +40,7 @@ public class Inmate {
 	}
 	
 	public String toString() {
-		return "" + ssn + ", '" + firstName + "', '" + lastName + "', " + height + ", " + weight 
+		return "" + ssn + ", '" + firstName + "', '" + lastName + "', '" + this.dob + "', " + height + ", " + weight 
 				+ ", '" + eyeColor + "', '" + hairColor + "', " + tattoos + ", '" + mugshot + "'";
 	}
 }
